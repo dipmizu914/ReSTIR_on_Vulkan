@@ -38,6 +38,7 @@ The code has not been tested on other platforms.
 ## 4. Implementation
 - [x] Triangle Light
 - [ ] (Beta) IBL 
+- [ ] Global Illumination
 
-# License
+# 5. License
 The source code is licensed MIT. The website content is licensed CC BY 4.0, see LICENSE.

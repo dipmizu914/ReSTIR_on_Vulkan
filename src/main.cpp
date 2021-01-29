@@ -16,7 +16,8 @@ static std::string sponza = "media/Sponza/glTF/Sponza.gltf";
 static std::string tample = "media/sun_tample/tample.gltf";
 // https://www.dropbox.com/s/ka378kmu62i669m/Bistro_Godot.glb?dl=0
 static std::string bistro = "media/bistro/bistro.gltf";
-static std::string loadScene = tample;
+
+static std::string loadScene = sponza;
 
 //If scene has no light, point lights will be generated randomly
 bool GenerateWhiteLight = true;
@@ -118,7 +119,7 @@ int main(int argc, char** argv)
 	app.setupGlfwCallbacks(window);
 	ImGui_ImplGlfw_InitForVulkan(window, true);
 
-	CameraManip.setLookat(nvmath::vec3f(5, 3, -20), nvmath::vec3f(-1, -2, -5), nvmath::vec3f(0, 1, 0));
+	CameraManip.setLookat(nvmath::vec3f(1, 3, 0), nvmath::vec3f(-5, 0, 0), nvmath::vec3f(0, 1, 0));
 	while (!glfwWindowShouldClose(window)) {
 		glfwPollEvents();
 		if (app.isMinimized())
