@@ -238,7 +238,7 @@ void App::destroyResources()
 	m_alloc.destroy(m_sceneUniformBuffer);
 
 	m_device.destroy(m_descStaticPool);
-	m_device.destroy(m_descTexturePool);
+
 	m_device.destroy(m_lightSetLayout);
 	m_device.destroy(m_restirSetLayout);
 
@@ -329,10 +329,6 @@ void App::_createDescriptorPool() {
 	};
 	m_descStaticPool = nvvk::createDescriptorPool(m_device, staticPoolSizes, maxSets);
 
-	std::vector<vkDP> texturePoolSizes{
-		vkDP(vkDT::eCombinedImageSampler, static_cast<uint32_t>(4 * m_gltfScene.m_materials.size()))
-	};
-	m_descTexturePool = nvvk::createDescriptorPool(m_device, texturePoolSizes, static_cast<uint32_t>(m_gltfScene.m_materials.size()));
 }
 
 void App::_createUniformBuffer()

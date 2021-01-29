@@ -96,7 +96,7 @@ public:
 		nvvk::CommandPool cmdBufGet(device, graphicsQueueIndex);
 		vk::CommandBuffer cmdBuf = cmdBufGet.createCommandBuffer();
 
-		m_pointLights = collectPointLightsFromScene(gltfScene);
+		m_pointLights = collectPointLights(gltfScene);
 		m_triangleLights = collectTriangleLights(gltfScene);
 		if (m_pointLights.empty() && m_triangleLights.empty()) {
 			m_pointLights = generatePointLights(gltfScene.m_dimensions.min, gltfScene.m_dimensions.max);

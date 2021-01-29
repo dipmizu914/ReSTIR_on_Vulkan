@@ -96,7 +96,6 @@ private:
 
 	//Descriptors
 	vk::DescriptorPool          m_descStaticPool;
-	vk::DescriptorPool          m_descTexturePool;
 
 	nvvk::DescriptorSetBindings m_sceneSetLayoutBind;
 	vk::DescriptorSetLayout     m_sceneSetLayout;

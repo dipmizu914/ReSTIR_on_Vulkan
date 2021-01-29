@@ -5,7 +5,7 @@ extern bool GeneratePointLight;
 extern bool GenerateWhiteLight;
 extern uint32_t numPointLightGenerates;
 
-std::vector<shader::pointLight> collectPointLightsFromScene(const nvh::GltfScene& scene) {
+std::vector<shader::pointLight> collectPointLights(const nvh::GltfScene& scene) {
 	std::vector<shader::pointLight> result;
 	result.reserve(scene.m_lights.size());
 	for (const nvh::GltfLight& light : scene.m_lights) {
@@ -21,11 +21,11 @@ std::vector<shader::pointLight> collectPointLightsFromScene(const nvh::GltfScene
 }
 
 std::vector<shader::pointLight> generatePointLights(
-nvmath::vec3 min, nvmath::vec3 max,
-	std::uniform_real_distribution<float> distR,
-	std::uniform_real_distribution<float> distG,
-	std::uniform_real_distribution<float> distB
+nvmath::vec3 min, nvmath::vec3 max
 ) {
+	std::uniform_real_distribution<float> distR = std::uniform_real_distribution<float>(0.0f, 1.0f);
+	std::uniform_real_distribution<float> distG = std::uniform_real_distribution<float>(0.0f, 1.0f);
+	std::uniform_real_distribution<float> distB = std::uniform_real_distribution<float>(0.0f, 1.0f);
 	std::uniform_real_distribution<float> distX(min.x, max.x);
 	std::uniform_real_distribution<float> distY(min.y, max.y);
 	std::uniform_real_distribution<float> distZ(min.z, max.z);

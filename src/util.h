@@ -19,12 +19,9 @@
 #include <random>
 
 
-[[nodiscard]] std::vector<shader::pointLight> collectPointLightsFromScene(const nvh::GltfScene&);
+[[nodiscard]] std::vector<shader::pointLight> collectPointLights(const nvh::GltfScene&);
 [[nodiscard]] std::vector<shader::pointLight> generatePointLights(
-	nvmath::vec3 min, nvmath::vec3 max, 
-	std::uniform_real_distribution<float> distR = std::uniform_real_distribution<float>(0.0f, 1.0f),
-	std::uniform_real_distribution<float> distG = std::uniform_real_distribution<float>(0.0f, 1.0f),
-	std::uniform_real_distribution<float> distB = std::uniform_real_distribution<float>(0.0f, 1.0f)
+	nvmath::vec3 min, nvmath::vec3 max
 );
 
 [[nodiscard]] std::vector<shader::triangleLight> collectTriangleLights(const nvh::GltfScene&);
