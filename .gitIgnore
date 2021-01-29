@@ -1,0 +1,16 @@
+*.orig
+*.filters
+*.sln
+*.vcxproj
+*.xcodeproj
+*.spv
+build
+
+*.blend
+bistro/
+sun_tample/
+thirdparty/bin_x64
+.vs/
+out/
+doc/videos
+*.gif

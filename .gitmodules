@@ -1,0 +1,6 @@
+[submodule "thirdparty/shared_sources"]
+	path = thirdparty/shared_sources
+	url = https://github.com/nvpro-samples/shared_sources.git
+[submodule "thirdparty/shared_external"]
+	path = thirdparty/shared_external
+	url = https://github.com/nvpro-samples/shared_external.git
