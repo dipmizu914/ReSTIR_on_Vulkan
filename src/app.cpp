@@ -309,27 +309,7 @@ void App::_loadScene(const std::string& filename)
 		// Re-adjusting camera to fit the new scene
 		CameraManip.fit(m_gltfScene.m_dimensions.min, m_gltfScene.m_dimensions.max, true);
 	}
-	// Show gltf scene info
-	std::cout << "Show gltf scene info" << std::endl;
-	std::cout << "scene center:[" << m_gltfScene.m_dimensions.center.x << ", "
-		<< m_gltfScene.m_dimensions.center.y << ", "
-		<< m_gltfScene.m_dimensions.center.z << "]" << std::endl;
 
-	std::cout << "max:[" << m_gltfScene.m_dimensions.max.x << ", "
-		<< m_gltfScene.m_dimensions.max.y << ", "
-		<< m_gltfScene.m_dimensions.max.z << "]" << std::endl;
-
-	std::cout << "min:[" << m_gltfScene.m_dimensions.min.x << ", "
-		<< m_gltfScene.m_dimensions.min.y << ", "
-		<< m_gltfScene.m_dimensions.min.z << "]" << std::endl;
-
-	std::cout << "radius:" << m_gltfScene.m_dimensions.radius << std::endl;
-
-	std::cout << "size:[" << m_gltfScene.m_dimensions.size.x << ", "
-		<< m_gltfScene.m_dimensions.size.y << ", "
-		<< m_gltfScene.m_dimensions.size.z << "]" << std::endl;
-
-	std::cout << "vertex num:" << m_gltfScene.m_positions.size() << std::endl;
 }
 
 void App::_createDescriptorPool() {

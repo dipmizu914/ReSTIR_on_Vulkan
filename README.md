@@ -37,3 +37,6 @@ This project is the implementation of [Spatiotemporal reservoir resampling for r
 ## 4. Implementation
 - [x] Triangle Light
 - [ ] (Beta) IBL 
+
+# License
+The source code is licensed MIT. The website content is licensed CC BY 4.0, see LICENSE.

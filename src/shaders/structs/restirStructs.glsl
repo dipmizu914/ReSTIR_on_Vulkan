@@ -2,10 +2,6 @@
 #define SPATIAL_REUSE_GROUP_SIZE_Y 1
 
 
-#define RESERVOIR_SIZE 1
-
-
-
 struct GeometryInfo {
 	vec3 camPos;
 	vec3 worldPos;

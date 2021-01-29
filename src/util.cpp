@@ -20,7 +20,7 @@ std::vector<shader::pointLight> collectPointLightsFromScene(const nvh::GltfScene
 	return result;
 }
 
-std::vector<shader::pointLight> generateRandomPointLights(
+std::vector<shader::pointLight> generatePointLights(
 nvmath::vec3 min, nvmath::vec3 max,
 	std::uniform_real_distribution<float> distR,
 	std::uniform_real_distribution<float> distG,
@@ -48,7 +48,7 @@ nvmath::vec3 min, nvmath::vec3 max,
 	return result;
 }
 
-std::vector<shader::triangleLight> collectTriangleLightsFromScene(const nvh::GltfScene& scene) {
+std::vector<shader::triangleLight> collectTriangleLights(const nvh::GltfScene& scene) {
 	std::vector<shader::triangleLight> result;
 	for (const nvh::GltfNode& node : scene.m_nodes) {
 		const nvh::GltfPrimMesh& mesh = scene.m_primMeshes[node.primMesh];
@@ -85,61 +85,61 @@ std::vector<shader::triangleLight> collectTriangleLightsFromScene(const nvh::Glt
 }
 
 [[nodiscard]] std::vector<shader::aliasTableCell> createAliasTable(std::vector<float>& pdf) {
-	std::queue<int> biggerThanOneQueue;
-	std::queue<int> smallerThanOneQueue;
-	std::vector<float> lightProbVec;
+	std::queue<int> biggerQueue;
+	std::queue<int> smallerQueue;
+	std::vector<float> lightPdf;
 
 	float powerSum = 0.f;
 	uint32_t lightNum = 0;
 	lightNum = static_cast<uint32_t>(pdf.size());
 	for (float p : pdf) {
 		powerSum += p;
-		lightProbVec.push_back(p);
+		lightPdf.push_back(p);
 	}
 
 	std::vector<shader::aliasTableCell> aliasTable(lightNum, shader::aliasTableCell{ -1,0.f, 0.f });
 
 	for (uint32_t i = 0; i < lightNum; ++i) {
-		aliasTable[i].pdf = lightProbVec[i] / powerSum;
+		aliasTable[i].pdf = lightPdf[i] / powerSum;
 		// aliasTable[i].pdf = 1.f / lightNum;
-		lightProbVec[i] = float(lightProbVec.size()) * lightProbVec[i] / powerSum;
-		if (lightProbVec[i] >= 1.f) {
-			biggerThanOneQueue.push(i);
+		lightPdf[i] = float(lightPdf.size()) * lightPdf[i] / powerSum;
+		if (lightPdf[i] >= 1.f) {
+			biggerQueue.push(i);
 		}
 		else {
-			smallerThanOneQueue.push(i);
+			smallerQueue.push(i);
 		}
 	}
 
 	// Construct Alias Table
-	while (!biggerThanOneQueue.empty() && !smallerThanOneQueue.empty()) {
-		int g = biggerThanOneQueue.front();
-		biggerThanOneQueue.pop();
-		int l = smallerThanOneQueue.front();
-		smallerThanOneQueue.pop();
+	while (!biggerQueue.empty() && !smallerQueue.empty()) {
+		int g = biggerQueue.front();
+		biggerQueue.pop();
+		int l = smallerQueue.front();
+		smallerQueue.pop();
 
-		aliasTable[l].prob = lightProbVec[l];
+		aliasTable[l].prob = lightPdf[l];
 		aliasTable[l].alias = g;
-		lightProbVec[g] = (lightProbVec[g] + lightProbVec[l]) - 1.f;
+		lightPdf[g] = (lightPdf[g] + lightPdf[l]) - 1.f;
 
-		if (lightProbVec[g] < 1.f) {
-			smallerThanOneQueue.push(g);
+		if (lightPdf[g] < 1.f) {
+			smallerQueue.push(g);
 		}
 		else {
-			biggerThanOneQueue.push(g);
+			biggerQueue.push(g);
 		}
 	}
 
-	while (!biggerThanOneQueue.empty()) {
-		int g = biggerThanOneQueue.front();
-		biggerThanOneQueue.pop();
+	while (!biggerQueue.empty()) {
+		int g = biggerQueue.front();
+		biggerQueue.pop();
 		aliasTable[g].prob = 1.f;
 		aliasTable[g].alias = g;
 	}
 
-	while (!smallerThanOneQueue.empty()) {
-		int l = smallerThanOneQueue.front();
-		smallerThanOneQueue.pop();
+	while (!smallerQueue.empty()) {
+		int l = smallerQueue.front();
+		smallerQueue.pop();
 		aliasTable[l].prob = 1.f;
 		aliasTable[l].alias = l;
 
@@ -150,26 +150,5 @@ std::vector<shader::triangleLight> collectTriangleLightsFromScene(const nvh::Glt
 	}
 
 	return aliasTable;
-}
-
-
-vk::Format findSupportedFormat(
-	const std::vector<vk::Format>& candidates, vk::PhysicalDevice physicalDevice,
-	vk::ImageTiling requiredTiling, vk::FormatFeatureFlags requiredFeatures
-) {
-	for (vk::Format fmt : candidates) {
-		vk::FormatProperties properties = physicalDevice.getFormatProperties(fmt);
-		vk::FormatFeatureFlags features =
-			requiredTiling == vk::ImageTiling::eLinear ?
-			properties.linearTilingFeatures :
-			properties.optimalTilingFeatures;
-		if ((features & requiredFeatures) == requiredFeatures) {
-			return fmt;
-		}
-	}
-	std::cout <<
-		"Failed to find format with tiling " << vk::to_string(requiredTiling) <<
-		" and features " << vk::to_string(requiredFeatures) << "\n";
-	std::abort();
 }
 

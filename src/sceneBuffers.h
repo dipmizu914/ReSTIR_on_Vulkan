@@ -97,9 +97,9 @@ public:
 		vk::CommandBuffer cmdBuf = cmdBufGet.createCommandBuffer();
 
 		m_pointLights = collectPointLightsFromScene(gltfScene);
-		m_triangleLights = collectTriangleLightsFromScene(gltfScene);
+		m_triangleLights = collectTriangleLights(gltfScene);
 		if (m_pointLights.empty() && m_triangleLights.empty()) {
-			m_pointLights = generateRandomPointLights(gltfScene.m_dimensions.min, gltfScene.m_dimensions.max);
+			m_pointLights = generatePointLights(gltfScene.m_dimensions.min, gltfScene.m_dimensions.max);
 		}
 
 		_loadEnvironment();

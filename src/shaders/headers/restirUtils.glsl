@@ -5,7 +5,7 @@ float luminance(vec3 v) {
 
 }
 
-vec3 pickPointOnTriangle(float r1, float r2, vec3 p1, vec3 p2, vec3 p3) {
+vec3 getTrianglePoint(float r1, float r2, vec3 p1, vec3 p2, vec3 p3) {
 	float sqrt_r1 = sqrt(r1);
 	return (1.0 - sqrt_r1) * p1 + (sqrt_r1 * (1.0 - r2)) * p2 + (r2 * sqrt_r1) * p3;
 }
@@ -33,32 +33,6 @@ vec4 EnvironmentSample(uint selected_idx, vec3 to_light) {
 }
 
 
-void getLightInfo(uint lightIdx, int lightKind, in uint sampleSeed, out vec3 lightSamplePos, out vec4 lightNormal, out float lightSampleLum, out vec3 lightSampleCol) {
-	uint seed = sampleSeed;
-	if (lightKind == LIGHT_KIND_POINT) {
-		pointLight light = pointLights.lights[lightIdx];
-		lightSamplePos = light.pos.xyz;
-		lightSampleLum = light.emission_luminance.w;
-		lightSampleCol = light.emission_luminance.xyz;
-		lightNormal = vec4(0.0f);
-	}
-	else if (lightKind == LIGHT_KIND_TRIANGLE) {
-		triangleLight light = triangleLights.lights[lightIdx];
-		lightSamplePos = pickPointOnTriangle(rnd(seed), rnd(seed), light.p1.xyz, light.p2.xyz, light.p3.xyz);
-		lightSampleLum = light.emission_luminance.w;
-		lightSampleCol = light.emission_luminance.xyz;
-		vec3 normal = light.normalArea.xyz;
-		lightNormal = vec4(normal, 1.0f);
-	}
-	else if (lightKind == LIGHT_KIND_ENVIRONMENT) {
-		vec4 col = EnvironmentSample(lightIdx, lightSamplePos);
-		lightSampleCol = col.rgb;
-		lightSampleLum = col.a;
-		lightNormal = vec4(0.0f);
-
-	}
-
-}
 
 float evaluatePHat(
 	uint lightIdx, int lightKind, in GeometryInfo gInfo
@@ -74,7 +48,7 @@ float evaluatePHat(
 	}
 	else if (lightKind == LIGHT_KIND_TRIANGLE) {
 		triangleLight light = triangleLights.lights[lightIdx];
-		vec3 lightSamplePos = pickPointOnTriangle(rnd(seed), rnd(seed), light.p1.xyz, light.p2.xyz, light.p3.xyz);
+		vec3 lightSamplePos = getTrianglePoint(rnd(seed), rnd(seed), light.p1.xyz, light.p2.xyz, light.p3.xyz);
 		wi = lightSamplePos - gInfo.worldPos;
 		emissionLum = light.emission_luminance.w;
 		vec3 normal = light.normalArea.xyz;
@@ -118,7 +92,7 @@ vec3 evaluatePHatFull(
 	}
 	else if (lightKind == LIGHT_KIND_TRIANGLE) {
 		triangleLight light = triangleLights.lights[lightIdx];
-		vec3 lightSamplePos = pickPointOnTriangle(rnd(seed), rnd(seed), light.p1.xyz, light.p2.xyz, light.p3.xyz);
+		vec3 lightSamplePos = getTrianglePoint(rnd(seed), rnd(seed), light.p1.xyz, light.p2.xyz, light.p3.xyz);
 		wi = lightSamplePos - gInfo.worldPos;
 		emission = light.emission_luminance.xyz;
 		vec3 normal = light.normalArea.xyz;

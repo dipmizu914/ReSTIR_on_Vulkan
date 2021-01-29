@@ -2,16 +2,9 @@
 #include <nvmath/nvmath.h>
 #include <nvmath/nvmath_glsltypes.h>
 
-namespace shader {
-#ifdef SHADER_DEFINE_INT_UB
-#	define int ::std::int32_t
-#else
-	static_assert(
-		sizeof(int) == sizeof(int32_t),
-		"int size mismatch - define SHADER_DEFINE_INT_UB to force int to use int32_t, "
-		"WHICH RESULTS IN UNDEFINED BEHAVIOR"
-		);
-#endif
+namespace shader
+{
+
 #define uint ::std::uint32_t
 #define vec2 ::nvmath::vec2
 #define vec4 ::nvmath::vec4
@@ -28,9 +21,6 @@ namespace shader {
 #include "shaders/structs/sceneStructs.glsl"
 #include "shaders/structs/light.glsl"
 
-#ifdef SHADER_DEFINE_INT_UB
-#	undef int
-#endif
 #undef uint
 #undef vec2
 #undef vec4
@@ -44,7 +34,7 @@ namespace shader {
 
 	struct PushConstant
 	{
-		int frame{ 0 };
-		int initialize{ 1 };
+		int frame{0};
+		int initialize{1};
 	};
-}
+} // namespace shader

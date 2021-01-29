@@ -117,7 +117,7 @@ void SceneSample(inout uint seed, vec3 worldPos, out vec3 lightSamplePos, out ve
 	}
 	else {
 		triangleLight light = triangleLights.lights[selected_idx];
-		lightSamplePos = pickPointOnTriangle(rnd(seed), rnd(seed), light.p1.xyz, light.p2.xyz, light.p3.xyz);
+		lightSamplePos = getTrianglePoint(rnd(seed), rnd(seed), light.p1.xyz, light.p2.xyz, light.p3.xyz);
 		lightSampleLum = light.emission_luminance.w;
 		lightKind = LIGHT_KIND_TRIANGLE;
 		vec3 wi = normalize(worldPos - lightSamplePos);
