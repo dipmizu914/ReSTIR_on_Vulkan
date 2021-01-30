@@ -6,7 +6,7 @@ Vulkan-ReSTIR friendly to NVIDIA Vulkan Wrapper
 ## 1. Explanation
 This project is the implementation of [Spatiotemporal reservoir resampling for real-time ray tracing with dynamic direct lighting](https://research.nvidia.com/sites/default/files/pubs/2020-07_Spatiotemporal-reservoir-resampling/ReSTIR.pdf) on Vulkan API with [NVIDIA Wrapper](https://github.com/nvpro-samples)
 
-## 2. Requirements on Windows:
+## 2. Requirements on Windows
 - Visual Studio 2019
 - Vulkan SDK above version 1.2.162.0.
 - NVIDIA graphics board that supports `VK_KHR_ray_tracing_pipeline` extension and corresponding drivers (latest recommended)
