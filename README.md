@@ -37,7 +37,7 @@ The code has not been tested on other platforms.
 
 ## 4. Implementation
 - [x] Triangle Light
-- [ ] (Beta) IBL 
+- [x] (Beta) IBL 
 - [ ] Global Illumination
 
 ## 5. License
