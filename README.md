@@ -17,7 +17,7 @@ The code has not been tested on other platforms.
 ## 3. Setup
  1. Clone this repository as follows,
    ```
-   https://github.com/dipmizu914/ReSTIR_on_Vulkan.git --recurse-submodules
+   git clone https://github.com/dipmizu914/ReSTIR_on_Vulkan.git --recurse-submodules
    ```
  2. Build by using CMake.
 
@@ -40,5 +40,5 @@ The code has not been tested on other platforms.
 - [ ] (Beta) IBL 
 - [ ] Global Illumination
 
-# 5. License
+## 5. License
 The source code is licensed MIT. The website content is licensed CC BY 4.0, see LICENSE.
